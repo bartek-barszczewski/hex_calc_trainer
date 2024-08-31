@@ -6,7 +6,7 @@ const InputHex = (props) => {
     const [hexNumber, setHexNumber] = React.useState(0);
 
     React.useEffect(() => {
-        const hex = Math.floor(Math.random() * (Number(props.max) - Number(props.min))) + Number(props.min);
+        const hex = Math.floor(Math.random() * (Number(props.max - 1) - Number(props.min))) + Number(props.min);
         setHexNumber(hex);
 
         props.onHexNumberChange(hex);
@@ -15,7 +15,7 @@ const InputHex = (props) => {
     return (
         <Form
             style={{
-                width: "21rem",
+                width: "100%",
             }}
         >
             <Form.Control type="text" value={`0x${hexNumber.toString(16)}`} readOnly />

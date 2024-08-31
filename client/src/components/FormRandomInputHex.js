@@ -14,12 +14,13 @@ import Form from "react-bootstrap/Form";
 const FormRandomInputHex = () => {
     const [hexLength, setHexLength] = React.useState(settings.START_LENGTH_HEX);
     const [min, setMin] = React.useState(Math.pow(settings.BASE, hexLength));
-    const [max, setMax] = React.useState(Math.pow(settings.BASE, hexLength + 1));
+    const [max, setMax] = React.useState(Math.pow(settings.BASE, hexLength));
     const [counter, setCounter] = React.useState(settings.START_COUNTER);
     const [operationIndex, setOperationIndex] = React.useState(0);
     const [operation, setOperation] = React.useState(settings.OPERATION_ARRAY[operationIndex]);
     const [hexadecimalNumbers, setHexadecimalNumbers] = React.useState({hex1: "0", hex2: "0"});
     const [result, setResult] = React.useState("");
+    const [errorTooLarge, setErrorToLarge] = React.useState(null);
 
     React.useEffect(() => {
         setCounter((prev) => prev);
@@ -43,6 +44,8 @@ const FormRandomInputHex = () => {
     };
 
     const changeHexLength = (e) => {
+        setErrorToLarge(null);
+
         setHexLength(() => {
             let lengthHexNumber = Number(e.target.value);
 
@@ -73,12 +76,18 @@ const FormRandomInputHex = () => {
             const result = response.data;
             setResult(result?.result_hex);
         })
-        .catch((err) => console.log(err.response.data));
+        .catch((err) => {
+            setErrorToLarge(err.response.data.error);
+            setCounter((prev) => prev + 1);
+            setResult("");
+            setHexLength(settings.START_LENGTH_HEX);
+        });
     };
 
     const setNewHexNumbers = () => {
         setCounter((prev) => prev + 1);
         setResult("");
+        setErrorToLarge(null);
     };
 
     return (
@@ -103,7 +112,9 @@ const FormRandomInputHex = () => {
                             into your synapses where they belong.
                         </i>
                     </p>
-                    <h5 className="py-3">Jeff Duntemann, x64 Assembly Language Step-by-Step Programming with Linux®</h5>
+                    <h4 className="pt-1 pb-5">
+                        Jeff Duntemann, x64 Assembly Language Step-by-Step Programming with Linux®
+                    </h4>
 
                     <Stack
                         direction="horizontal"
@@ -170,7 +181,7 @@ const FormRandomInputHex = () => {
                             />
                             <Form
                                 style={{
-                                    width: "21rem",
+                                    width: "100%",
                                     display: "flex",
                                     gap: "1rem",
                                 }}
@@ -188,9 +199,13 @@ const FormRandomInputHex = () => {
                                 style={{
                                     display: "flex",
                                     flexDirection: "row",
+                                    position: "relative",
+                                    top: 0,
+                                    left: 0,
+                                    width: "100%",
                                 }}
                             >
-                                <Stack direction="horizontal" gap={3}>
+                                <Stack direction="horizontal" gap={3} style={{width: "100%"}}>
                                     <Button variant="flat" size="xxl" type="button" onClick={setNewHexNumbers}>
                                         NEW
                                     </Button>
@@ -198,6 +213,7 @@ const FormRandomInputHex = () => {
                                         SHOW ANSWER
                                     </Button>
                                 </Stack>
+                                {errorTooLarge && <p className="error">* {errorTooLarge}</p>}
                             </Row>
                         </Col>
                     </Stack>

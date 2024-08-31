@@ -1,5 +1,9 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 
+* {
+    --bs-gutter-x: 0 !important;
+}
+
 body {
     background-color: #120a1c;
     color: rgb(222, 222, 222);
@@ -22,11 +26,6 @@ input {
     color: white;
 }
 
-.input:placeholder {
-    background-color: rgb(67, 0, 67);
-    color: white;
-}
-
 .btn-flat:hover {
     background-color: rgb(49, 0, 49);
     color: white;
@@ -35,4 +34,15 @@ input {
 .btn-xxl {
     padding: 1rem 1.5rem;
     font-size: 1.5rem;
+    width: 100%;
+}
+
+.error {
+    padding: 0.5rem 1rem;
+    color: red;
+    font-size: 0.8rem !important;
+    height: 1rem;
+    position: absolute;
+    top: 5rem;
+    left: 0rem;
 }
