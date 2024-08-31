@@ -65,7 +65,7 @@ def get_data():
             "firstHex": hex(firstHex),
             "secondHex": hex(secondHex),
             "operation": operation,
-            "result_hex": f"0x{hex_result}",
+            "result_hex": f"{hex_result}",
             "result_decimal": decimal_result,
         }
     )
