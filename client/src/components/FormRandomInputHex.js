@@ -1,6 +1,7 @@
 import React from "react";
 import InputHex from "./InputHex";
 import {settings} from "./utils/settings";
+
 import axios from "axios";
 import "./../style/main.css";
 import Button from "react-bootstrap/Button";
@@ -129,10 +130,10 @@ const FormRandomInputHex = () => {
     return (
         <ThemeProvider breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]} minBreakpoint="xxs">
             <Container fluid>
-                <Container></Container>
-                <Container className="trainer_main_container">
+                <Container class="description_main_container">
                     <Description />
-
+                </Container>
+                <Container className="trainer_main_container" id="practice">
                     <Stack direction="horizontal" className="stack_calculator">
                         <Col md="6" className="col_calculation_results">
                             <Row className="justify_row">
@@ -185,7 +186,7 @@ const FormRandomInputHex = () => {
                             <Row className="row_button_stack">
                                 <Stack direction="horizontal" gap={3} md={12}>
                                     <Button variant="flat" size="xxl" type="button" onClick={setNewHexNumbers}>
-                                        NEW
+                                        NEW HEX
                                     </Button>
                                     <Button onClick={sendToApi} variant="flat" size="xxl">
                                         SHOW ANSWER
