@@ -111,6 +111,9 @@ const FormRandomInputHex = () => {
     const hex2 = hexadecimalNumbers.hex2.toString(16).split("");
     const hexResult = result && result.indexOf("0x") === -1 ? result.split("") : result.replace("0x", "").split("");
 
+    const diffHex1 = hex2.length - hex1.length !== -1 && hex2.length - hex1.length !== 0;
+    const diffHex2 = hex1.length - hex2.length !== -1 && hex1.length - hex2.length !== 0;
+
     const hex1Columns = hex1.map((hex, index) => {
         return <td key={`${index}_hex_1`}>{hex}</td>;
     });
@@ -142,10 +145,13 @@ const FormRandomInputHex = () => {
                                         </thead>
                                         <tbody>
                                             <tr>
+                                                {!result.length && diffHex1 && <td></td>}
                                                 {columnsToFillForHex1}
                                                 {hex1Columns}
                                             </tr>
                                             <tr>
+                                                {!result.length && diffHex2 && <td></td>}
+
                                                 {columnsToFillForHex2}
                                                 {hex2Columns}
                                             </tr>
