@@ -7,15 +7,14 @@ const Description = () => {
         <Stack className="stack_description">
             <h1 style={{textAlign: "center"}}>Hexadecimal Calculation Trainer</h1>
             <BugIcon />
+            <h3 className="pt-4 pb-2">What if I told you...</h3>
             <p className="cite mt-3">
                 <i>
-                    "...Yes, that's asking a lot. But I ask you now, as I will ask you again on this journey, do you
-                    wanna hack assembly … or do you just wanna fool around? It takes practice to learn the piano, and it
-                    takes practice to drive the core skills of assembly language programming down into your synapses
-                    where they belong."
+                    Consistently practicing hexadecimal math will make you more comfortable with assembly language, as
+                    it improves your ability to work with numbers in a way that is essential for effective programming
+                    at the hardware level.
                 </i>
             </p>
-            <h4 className="pt-1 pb-5">Jeff Duntemann, x64 Assembly Language Step-by-Step Programming with Linux®</h4>
 
             <a href="#practice" className="button_go_to_train">
                 <Button variant="flat" size="xxl" type="button">
