@@ -1,6 +1,6 @@
 import React from "react";
 import InputHex from "./InputHex";
-import {settings, subtractHexNumbers, addHexNumbers} from "./utils/settings";
+import {settings} from "./utils/settings";
 import axios from "axios";
 import "./../style/main.css";
 import Button from "react-bootstrap/Button";
@@ -10,6 +10,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import Form from "react-bootstrap/Form";
+import Description from "./Description";
 
 const FormRandomInputHex = () => {
     const [hexLength, setHexLength] = React.useState(settings.START_LENGTH_HEX);
@@ -79,8 +80,8 @@ const FormRandomInputHex = () => {
         .catch((err) => {
             setErrorToLarge(err.response.data.error);
             setCounter((prev) => prev + 1);
-            setResult("");
             setHexLength(settings.START_LENGTH_HEX);
+            setResult("");
         });
     };
 
@@ -94,118 +95,45 @@ const FormRandomInputHex = () => {
         <ThemeProvider breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]} minBreakpoint="xxs">
             <Container fluid>
                 <Container></Container>
-                <Container
-                    style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        flexDirection: "column",
-                    }}
-                >
-                    <h2 className="py-5">Hexadecimal Calculation Trainer</h2>
-                    <p className="cite mt-3">
-                        <i>
-                            Yes, that's asking a lot. But I ask you now, as I will ask you again on this journey, do you
-                            wanna hack assembly … or do you just wanna fool around? It takes practice to learn the
-                            piano, and it takes practice to drive the core skills of assembly language programming down
-                            into your synapses where they belong.
-                        </i>
-                    </p>
-                    <h4 className="pt-1 pb-5">
-                        Jeff Duntemann, x64 Assembly Language Step-by-Step Programming with Linux®
-                    </h4>
+                <Container className="trainer_main_container">
+                    <Description />
 
-                    <Stack
-                        direction="horizontal"
-                        style={{
-                            height: "50vh",
-                            backgroundColor: "black",
-                            borderRadius: "1rem",
-                            padding: "3rem",
-                            border: "1px solid #999",
-                        }}
-                    >
-                        <Col
-                            md="6"
-                            style={{
-                                height: "100%",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
-                        >
-                            <Row
-                                style={{
-                                    width: "100%",
-                                    justifyContent: "start",
-                                }}
-                            >
-                                <Stack
-                                    style={{
-                                        width: "100%",
-                                        justifyContent: "start",
-                                    }}
-                                >
+                    <Stack direction="horizontal" className="stack_calculator">
+                        <Col md="6" className="col_calculation_results">
+                            <Row className="justify_row">
+                                <Stack className="justify_stack">
                                     <p> 0x{hexadecimalNumbers.hex1.toString(16)} </p>
                                     <p>
                                         0x{hexadecimalNumbers.hex2.toString(16)} <span>&nbsp; {operation} </span>
                                     </p>
                                     <hr />
-                                    <p>{result.indexOf(".") != -1 ? result : `0x${result}`}</p>
+                                    <p>{result.indexOf(".") !== -1 ? result : `0x${result}`}</p>
                                 </Stack>
                             </Row>
                         </Col>
-                        <Col
-                            style={{
-                                height: "100%",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                flexDirection: "column",
-                                gap: "1rem",
-                            }}
-                            md="6"
-                        >
+
+                        <Col className="col_to_generate_hex_numbers" md="6">
                             <InputHex
                                 min={min}
                                 max={max}
                                 counter={counter}
                                 onHexNumberChange={(hex) => handleHexNumbers(hex, "hex1")}
                             />
+
                             <InputHex
                                 min={min}
                                 max={max}
                                 counter={counter}
                                 onHexNumberChange={(hex) => handleHexNumbers(hex, "hex2")}
                             />
-                            <Form
-                                style={{
-                                    width: "100%",
-                                    display: "flex",
-                                    gap: "1rem",
-                                }}
-                            >
-                                <Form.Control value={"10^"} style={{width: "5rem"}} />
-                                <Form.Control
-                                    style={{widht: "15rem"}}
-                                    className="input"
-                                    type="text"
-                                    value={hexLength}
-                                    onInput={changeHexLength}
-                                />
+
+                            <Form className="form_ten_power_to">
+                                <Form.Control value={"10^"} className="input_basis_of_power" />
+                                <Form.Control type="text" value={hexLength} onInput={changeHexLength} md={12} />
                             </Form>
-                            <Row
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    position: "relative",
-                                    top: 0,
-                                    left: 0,
-                                    width: "100%",
-                                }}
-                            >
-                                <Stack direction="horizontal" gap={3} style={{width: "100%"}}>
+
+                            <Row className="row_button_stack">
+                                <Stack direction="horizontal" gap={3} md={12}>
                                     <Button variant="flat" size="xxl" type="button" onClick={setNewHexNumbers}>
                                         NEW
                                     </Button>

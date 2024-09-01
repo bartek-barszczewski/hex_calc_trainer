@@ -46,3 +46,70 @@ input {
     top: 5rem;
     left: 0rem;
 }
+
+.trainer_main_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.stack_calculator {
+    height: 50vh;
+    background-color: black;
+    border-radius: 1rem;
+    padding: 3rem;
+    border: 1px solid #999;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.col_calculation_results {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.justify_row {
+    width: 100%;
+    justify-content: start;
+}
+
+.justify_stack {
+    width: 100%;
+    justify-content: start;
+}
+
+.col_to_generate_hex_numbers {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form_ten_power_to {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+}
+
+.input_basis_of_power {
+    width: 5rem;
+}
+
+.row_button_stack {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.form_random_number {
+    width: 100%;
+}
