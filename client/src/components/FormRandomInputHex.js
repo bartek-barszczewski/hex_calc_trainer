@@ -22,6 +22,8 @@ const FormRandomInputHex = () => {
     const [hexadecimalNumbers, setHexadecimalNumbers] = React.useState({hex1: "0", hex2: "0"});
     const [result, setResult] = React.useState("");
     const [errorTooLarge, setErrorToLarge] = React.useState(null);
+    const [columnsToFillForHex1, setColumnsToFillForHex1] = React.useState([]);
+    const [columnsToFillForHex2, setColumnsToFillForHex2] = React.useState([]);
 
     React.useEffect(() => {
         setCounter((prev) => prev);
@@ -56,6 +58,8 @@ const FormRandomInputHex = () => {
 
             return Number(lengthHexNumber);
         });
+
+        setResult("");
     };
 
     const sendToApi = () => {
@@ -74,8 +78,18 @@ const FormRandomInputHex = () => {
             }
         )
         .then((response) => {
-            const result = response.data;
-            setResult(result?.result_hex);
+            const result = response.data.result_hex;
+            setResult(result);
+
+            const hex1 = hexadecimalNumbers.hex1.toString(16).split("");
+            const hex2 = hexadecimalNumbers.hex2.toString(16).split("");
+            const hexResult = result.indexOf("0x") === -1 ? result.split("") : result.replace("0x", "").split("");
+
+            const amountColumnsToFillHex1 = hexResult.length - hex1.length;
+            const amountColumnsToFillHex2 = hexResult.length - hex2.length;
+
+            setColumnsToFillForHex1(Array(amountColumnsToFillHex1).fill(<td></td>));
+            setColumnsToFillForHex2(Array(amountColumnsToFillHex2).fill(<td></td>));
         })
         .catch((err) => {
             setErrorToLarge(err.response.data.error);
@@ -89,7 +103,25 @@ const FormRandomInputHex = () => {
         setCounter((prev) => prev + 1);
         setResult("");
         setErrorToLarge(null);
+        setColumnsToFillForHex1([]);
+        setColumnsToFillForHex2([]);
     };
+
+    const hex1 = hexadecimalNumbers.hex1.toString(16).split("");
+    const hex2 = hexadecimalNumbers.hex2.toString(16).split("");
+    const hexResult = result && result.indexOf("0x") === -1 ? result.split("") : result.replace("0x", "").split("");
+
+    const hex1Columns = hex1.map((hex, index) => {
+        return <td key={`${index}_hex_1`}>{hex}</td>;
+    });
+
+    const hex2Columns = hex2.map((hex, index) => {
+        return <td key={`${index}_hex_2`}>{hex}</td>;
+    });
+
+    const hexResultColumns = hexResult.map((hex, index) => {
+        return <td key={`${index}_hex_result`}>{hex}</td>;
+    });
 
     return (
         <ThemeProvider breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]} minBreakpoint="xxs">
@@ -102,12 +134,24 @@ const FormRandomInputHex = () => {
                         <Col md="6" className="col_calculation_results">
                             <Row className="justify_row">
                                 <Stack className="justify_stack">
-                                    <p> 0x{hexadecimalNumbers.hex1.toString(16)} </p>
-                                    <p>
-                                        0x{hexadecimalNumbers.hex2.toString(16)} <span>&nbsp; {operation} </span>
-                                    </p>
-                                    <hr />
-                                    <p>{result.indexOf(".") !== -1 ? result : `0x${result}`}</p>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th colspan="16"> Operation: [{operation}]</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                {columnsToFillForHex1}
+                                                {hex1Columns}
+                                            </tr>
+                                            <tr>
+                                                {columnsToFillForHex2}
+                                                {hex2Columns}
+                                            </tr>
+                                            <tr className="border_for_row">{hexResultColumns}</tr>
+                                        </tbody>
+                                    </table>
                                 </Stack>
                             </Row>
                         </Col>
@@ -128,7 +172,7 @@ const FormRandomInputHex = () => {
                             />
 
                             <Form className="form_ten_power_to">
-                                <Form.Control value={"10^"} className="input_basis_of_power" />
+                                <Form.Control value={"10^"} className="input_basis_of_power" readOnly />
                                 <Form.Control type="text" value={hexLength} onInput={changeHexLength} md={12} />
                             </Form>
 

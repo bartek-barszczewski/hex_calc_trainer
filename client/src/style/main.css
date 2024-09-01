@@ -113,3 +113,11 @@ input {
 .form_random_number {
     width: 100%;
 }
+
+.border_for_row {
+    border-top: 1px solid #aaa;
+}
+
+.text_aling_right {
+    text-align: right;
+}
